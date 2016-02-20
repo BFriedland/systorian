@@ -14,8 +14,9 @@ from utils import read_top
 
 import logging
 
-logging.basicConfig(level=logging.DEBUG, filename='/tmp/metrics.log')
-
+# The next two LOC should be parameterized; this is on the to-do list.
+# The logger is commented out to assist new users.
+# logging.basicConfig(level=logging.DEBUG, filename='/tmp/metrics.log')
 
 # osx
 TOP_COMMAND = 'top -n 0 -l 1'  # zero processes, one repetition in logging mode
@@ -39,7 +40,7 @@ def make_new_top_entry():
 # the delta since the last time top was called. Can be done on the ORM/database
 # levels (or even in Django), too. Doing it here is trading space for time.
 # I could have made another layer of abstraction here, but I didn't want to
-# spend too much time debugging my code's interaction with Huey's decorators.
+# debug the code's interaction with Huey's decorators just yet.
 # @db_periodic_task(crontab(minute='*'))
 # def make_new_stats_delta_entry():
 #     try:
@@ -52,8 +53,6 @@ def make_new_top_entry():
 #         logging.exception('Exception raised in make_new_top_delta_entry')
 
 
-
-
 # @db_periodic_task(crontab(minute='*'))
 # def make_new_netstat_entry():
 #     try:
@@ -62,7 +61,3 @@ def make_new_top_entry():
 #         new_entry.save()
 #     except:
 #         logging.exception('Exception raised in make_new_netstat_entry')
-
-
-
-
