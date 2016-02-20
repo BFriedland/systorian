@@ -2,9 +2,11 @@
 Customizable and searchable system stats logger with a web API. Uses Django 1.9's support for fully searchable JSONFields to provide an easily extensible storage framework.
 
 ### API
-`/` : Get current (most recent) system stats entry
-`/api/v1/` : Get full entry list, paginated in 10s
-`/api/v1/on/YEAR/MONTH/DAY/` : Get all entries made on the selected day.
+`/` : Get current (most recent) system stats entry.
+
+`/api/v1/` : Get full entry list, paginated in 10s.
+
+`/api/v1/on/YEAR/MONTH/DAY/` : Get all entries made on the selected day (time is in UTC).
 
 Other API endpoints coming soon:
 - Arbitrary time range entry selection, down to the second
