@@ -14,6 +14,7 @@ Other API endpoints coming soon:
 ### Important notes
 - systorian v0.1 does not have an authentication system. This project is still very much a prototype under construction.
 - The installation and setup instructions were hastily prepared on OS X buy written for Ubuntu (by request). It needs Redis running locally, plus Huey (a Python task queue) running in the Django project. It will also need the Django server running to view the entries it creates.
+- These deployment notes are intended for development purposes and are not tuned for production. It's a hobby project.
 
 ## Server setup summary: OS X
 - (Instructions for installing Homebrew should go here)
@@ -24,7 +25,7 @@ cd systorian
 pip install -r requirements.txt
 
 psql postgres
-CREATE USER systorian_owner WITH PASSWORD 'systorian_owner';
+CREATE USER systorian_owner WITH PASSWORD 'Pick a good password';
 ALTER ROLE systorian_owner SET client_encoding TO 'utf8';
 ALTER ROLE systorian_owner SET default_transaction_isolation TO 'read committed';
 ALTER ROLE systorian_owner SET timezone TO 'UTC';
@@ -59,9 +60,11 @@ curl -o localhost:8000
 
 #### PostgreSQL
 
-installing postgres on ubuntu:
+Installing postgres on Ubuntu:
+```
 sudo apt-get update
 sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contrib
+```
 
 ref: http://stackoverflow.com/a/21123195
 ```
@@ -94,11 +97,15 @@ redis-server setup with homebrew, plus redis.conf location on osx: https://mediu
 Warning, not thoroughly tested on Ubuntu. Only tested on OS X so far.
 I got it to work on OS X, but this setup should hopefully translate cleanly enough to Ubuntu with the Ubuntu-specific notes here.
 
-#### Postgres install and setup
-Git clone would be replaced with whatever the bundle command is (didn't spend time looking it up yet)
-```bash
-git clone REMOTE
+#### Make a virtual environment and clone in to the repository
+- (Instructions for making a virtualenv go here; Python venvs need Python first)
+```
+git clone https://github.com/BFriedland/systorian.git
+cd systorian
+```
 
+#### Postgres install and setup
+```bash
 sudo apt-get update
 sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contrib
 ```
@@ -106,7 +113,7 @@ sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contr
 Bash, into psql:
 ```bash
 sudo psql postgres
-CREATE USER systorian_owner WITH PASSWORD 'systorian_owner';
+CREATE USER systorian_owner WITH PASSWORD 'Pick a good password';
 ALTER ROLE systorian_owner SET client_encoding TO 'utf8';
 ALTER ROLE systorian_owner SET default_transaction_isolation TO 'read committed';
 ALTER ROLE systorian_owner SET timezone TO 'UTC';
@@ -114,7 +121,6 @@ CREATE DATABASE systorian WITH OWNER systorian_owner;
 GRANT ALL PRIVILEGES ON DATABASE systorian TO systorian_owner;
 \q
 ```
-
 
 #### Redis install and setup
 More bash, this gets and builds redis
@@ -131,6 +137,7 @@ make
 
 #### Daemonize redis
 (note: PID file is /usr/local/var/run/redis.pid on osx at least)
+
 ##### Option 1: settings file modification
 Reference: http://stackoverflow.com/a/525606
 ```bash
